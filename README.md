@@ -441,7 +441,7 @@ env.close()
 
 ### Learned Policy:
 
-<img width="342" height="157" alt="image" src="https://github.com/user-attachments/assets/0e487f7a-e918-42d9-a441-a8f3707b0c69" />
+<img width="385" height="182" alt="image" src="https://github.com/user-attachments/assets/7e54198d-bf22-48bd-989c-93f475b4d7cd" />
 
 
 ### Learning Curve:
