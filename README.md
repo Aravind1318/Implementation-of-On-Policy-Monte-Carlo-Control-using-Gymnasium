@@ -1,167 +1,93 @@
-# Implementation-of-On-Policy-Monte-Carlo-Control-using-Gymnasium
----
+# IMPLEMENTATION OF ON-POLICY MONTE CARLO CONTROL USING GYMNASIUM FROZENLAKE-V1
+# 2. Initialize Q-table
+# ------------------------------------------------------------
 
-## Aim
+Q = np.zeros((n_states, n_actions))
 
-To implement **Monte Carlo Control** using the Gymnasium `FrozenLake-v1` environment and learn an improved policy by estimating the action-value function from complete episodes.
 
----
+# ------------------------------------------------------------
+# 3. Parameters
+# ------------------------------------------------------------
 
-## Problem Statement
+alpha = 0.1
+gamma = 0.99
 
-The `FrozenLake-v1` environment consists of frozen tiles, holes, a start state, and a goal state. The agent must learn a policy that helps it reach the goal while avoiding holes.
+epsilon = 1.0
+epsilon_min = 0.05
+epsilon_decay = 0.9995
 
-The objective of this experiment is to:
+num_episodes = 10000
 
-1. Generate complete episodes using the Gymnasium environment.
-2. Estimate the action-value function $Q(s,a)$ using Monte Carlo returns.
-3. Use epsilon-greedy action selection for exploration and exploitation.
-4. Improve the policy based on the learned Q-values.
-5. Display the final Q-table, estimated state-value function, learned policy, and learning curve.
+# Store reward obtained in every episode
+episode_rewards = []
 
----
 
-## Software Requirements
+# ------------------------------------------------------------
+# 4. Epsilon-Greedy Action Selection
+# ------------------------------------------------------------
 
-```bash
-pip install gymnasium numpy matplotlib
-```
+def epsilon_greedy_action(state, epsilon):
 
----
+    # Exploration
+    if np.random.random() < epsilon:
+        return env.action_space.sample()
 
-## Environment Description
+    # Exploitation
+    return np.argmax(Q[state])
 
 
+# ------------------------------------------------------------
+# 5. Monte Carlo Control
+# ------------------------------------------------------------
 
+for episode in range(num_episodes):
 
+    # Reset environment
+    state, info = env.reset()
 
+    # Store:
+    # (state, action, reward)
+    episode_data = []
 
+    total_reward = 0
 
-## Theory
+    terminated = False
+    truncated = False
 
-Monte Carlo methods learn from **complete episodes**. An episode is a sequence of states, actions, and rewards:
 
-$$
-S_0, A_0, R_1, S_1, A_1, R_2, \ldots, S_T
-$$
+    # --------------------------------------------------------
+    # Generate Complete Episode
+    # --------------------------------------------------------
 
-The return from time step $t$ is:
+    while not terminated and not truncated:
 
-$$
-G_t = R_{t+1} + \gamma R_{t+2} + \gamma^2 R_{t+3} + \cdots
-$$
+        # Select action using epsilon-greedy policy
+        action = epsilon_greedy_action(
+            state,
+            epsilon
+        )
 
-Monte Carlo Control estimates the action-value function:
+        # Execute action
+        next_state, reward, terminated, truncated, info = env.step(
+            action
+        )
 
-$$
-Q(s,a)
-$$
+        # Store experience
+        episode_data.append(
+            (state, action, reward)
+        )
 
-The incremental update rule is:
+        # Accumulate reward
+        total_reward += reward
 
-$$
-Q(s,a) \leftarrow Q(s,a) + \alpha \left[G_t - Q(s,a)\right]
-$$
+        # Move to next state
+        state = next_state
 
-Where:
 
-| Symbol | Meaning |
-|---|---|
-| $s$ | Current state |
-| $a$ | Action taken in state $s$ |
-| $G_t$ | Return from time step $t$ |
-| $Q(s,a)$ | Action-value estimate |
-| $\alpha$ | Learning rate |
-| $\gamma$ | Discount factor |
+    # --------------------------------------------------------
+    # Calculate Return and Update Q-table
+    # --------------------------------------------------------
 
----
+    G = 0
 
-## Epsilon-Greedy Policy
-
-Monte Carlo Control uses epsilon-greedy action selection.
-
-With probability $\epsilon$, the agent explores by selecting a random action.
-
-With probability $1 - \epsilon$, the agent exploits by selecting the action with the highest Q-value.
-
-The greedy action is selected as:
-
-$$
-a = \arg\max_a Q(s,a)
-$$
-
-The final learned policy is:
-
-$$
-\pi(s) = \arg\max_a Q(s,a)
-$$
-
----
-
-## Algorithm
-
-
-
-## Python Program
-
--------------------------------------------------
-#### Monte Carlo Control
-
-
-```python
-# Write your code here
-
-
-
-```
-
----
-
-## Output
-
-```text
-Final Q-table:
-
-
-
-Estimated State-Value Function:
-
-
-
-
-
-
-
-Learned Policy:
-
-
-
-
-
-Average reward over last 1000 episodes: 
-```
-
-
----
-
-## Result
-```text
-
-
-
-```
----
-
-## Inference
-```text
-
-
-
-```
-
-
-
-
-
----
-
+    # Traverse the episode backwards
