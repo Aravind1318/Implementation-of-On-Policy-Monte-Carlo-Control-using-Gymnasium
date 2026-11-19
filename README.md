@@ -434,10 +434,10 @@ env.close()
 <img width="278" height="63" alt="image" src="https://github.com/user-attachments/assets/a60677d0-a954-427e-a2b2-7219789a143f" />
 
 ### Final Q-table:
-<img width="386" height="401" alt="image" src="https://github.com/user-attachments/assets/a6daf0a8-b788-4f8e-b41c-781aa88616e4" />
+<img width="297" height="303" alt="image" src="https://github.com/user-attachments/assets/27b308e6-5584-4119-a007-496045669137" />
 
 ### Estimated State-Value Function:
-<img width="382" height="135" alt="image" src="https://github.com/user-attachments/assets/3c8088a2-4241-45cf-9ad6-004b6b761f66" />
+<img width="255" height="92" alt="image" src="https://github.com/user-attachments/assets/07df5fb3-4ae6-458f-8588-aa39c821aa5d" />
 
 ### Learned Policy:
 
