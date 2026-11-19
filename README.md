@@ -445,7 +445,7 @@ env.close()
 
 
 ### Learning Curve:
-<img width="1159" height="647" alt="image" src="https://github.com/user-attachments/assets/6aa28efb-20c3-423b-85c1-a7c17f84ea0e" />
+<img width="731" height="486" alt="image" src="https://github.com/user-attachments/assets/95bbb12f-2a23-46df-969c-020ef4923d02" />
 
 
 
